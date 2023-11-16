@@ -42,11 +42,15 @@ const Page = () => {
   
   return (
     <> 
-    <Navbar user={user} />
-    <div className="flex flex-row">
-      <Menu />
-      <Container />
-    </div>
+      <div className="flex justify-center sm:grid sm:grid-cols-12 sm:gap-4">
+        <div className="col-span-2 mt-16">
+          <Menu />
+        </div>
+        <div className="col-span-8">
+          <Navbar user={user} />
+          <Container />
+        </div>
+      </div>
     </>
   )
 }

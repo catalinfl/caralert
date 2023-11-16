@@ -45,11 +45,23 @@ const Navbar = ({user}: NavbarProps) => {
     
 
   return (
-    <div className="navbar bg-base-100 max-w-6xl mt-2 rounded-lg mx-auto">
+    <div className="navbar bg-base-10 bg-white border-[2px] border-secondary max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mt-2 rounded-lg mx-auto">
   <div className="flex">
     <a className="btn btn-ghost text-xl">CarAlert</a>
   </div>
-  <div className="flex-grow justify-end flex-row gap-3">
+  <div className="flex-grow justify-end flex-row gap-0 md:gap-2">  
+  <ul className="menu menu-horizontal xl:hidden flex rounded-sm bg-secondary text-white">
+        <li>
+            <details>
+                <summary className="bg-secondary">
+                    Cars
+                </summary>
+                <ul className="p-2 bg-base-100 rounded-sm text-black">
+                    <li><a> Link 1 </a></li>
+                </ul>
+            </details>
+        </li>
+    </ul>
     <ul className="menu menu-horizontal px-1">
         <li>
             <details>
