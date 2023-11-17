@@ -14,19 +14,58 @@ export type UserProps = {
   image: string
 }
 
+export type ContainerHandler = {
+  principal: boolean,
+  add: boolean,
+  expires: boolean,
+  car: string | false
+}
+
 
 const Page = () => {
   
   const { data, status }  = useSession();
   
+  const initContainer: ContainerHandler = {
+    principal: true,
+    add: false,
+    expires: false,
+    car: false
+  }
+    
   const initUser = {
     name: "",
     email: "",
     image: ""
   }
   
+  const [containerHandler, setContainerHandler] = useState<ContainerHandler>(initContainer) 
   const [user, setUser] = useState<UserProps>(initUser)
   
+    useEffect(() => {
+      console.log(containerHandler)
+    }, [containerHandler])
+  
+  const changeContainer = (container: keyof ContainerHandler, id: string | null) => {
+    switch (container) {
+      case "principal": {
+        setContainerHandler(initContainer)
+        break
+      }
+      case "add": {
+        setContainerHandler(prev => ({...prev, principal: false, add: true}))
+        break
+      }
+      case "expires": {
+        setContainerHandler(prev => ({...prev, principal: false, expires: true}))
+        break
+      }
+      case "car": {
+        setContainerHandler(prev => ({...prev, principal: false, car: id as string}))
+        break
+      }
+    }
+  }
   
   useEffect(() => {
     if (status === "authenticated") {
@@ -41,17 +80,17 @@ const Page = () => {
 
   
   return (
-    <> 
-      <div className="flex justify-center sm:grid sm:grid-cols-12 sm:gap-4">
+      <div className="flex w-full justify-center sm:grid sm:grid-cols-12 sm:gap-4">
         <div className="col-span-2 mt-16">
-          <Menu />
+          <Menu changeContainer={changeContainer}/>
         </div>
         <div className="col-span-8">
           <Navbar user={user} />
-          <Container />
+          <Container>
+            <p> muie steaua </p>
+          </Container>
         </div>
       </div>
-    </>
   )
 }
 

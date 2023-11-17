@@ -1,5 +1,8 @@
 import type { Config } from 'tailwindcss'
 import daisyui from 'daisyui'
+import themes from "daisyui/src/theming/themes"
+
+const light = themes.light
 
 const config: Config = {
   content: [
@@ -11,7 +14,12 @@ const config: Config = {
   },
   plugins: [daisyui],
   daisyui: {
-    themes: ["light"]
+    themes: [{
+      light: {
+        ...light,
+        'neutral': '#4F46E5', 
+      }
+    }]
   }
 }
 export default config

@@ -1,5 +1,5 @@
 "use client"
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import Coupe from '../../public/coupe.svg';
 import Coupe2 from '../../public/coupe2.svg';
@@ -12,12 +12,14 @@ import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
+
+
 type Car = string;
 
 type Cars = Car[];
 
 
-export default function Home() {
+function Home() {
 
   const session = useSession();
   
@@ -36,7 +38,6 @@ export default function Home() {
   }
   
   return (
-      <main>
         <div className="flex flex-col bg-gradient-to-tr from-primary to-secondary rounded-lg min-h-[800px] p-5 mt-12 text-center md:text-start md:max-w-[1280px] w-full max-w-[400px] sm:max-w-[600px] mx-auto">
           <div className="flex h-[150px] sm:h-[200px]"> 
             <h1 className="text-4xl sm:text-6xl text-white font-bold">
@@ -70,9 +71,8 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </main>
   );
 }
 
-
+export default Home
 
