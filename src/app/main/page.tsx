@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Navbar from '@/components/Navbar';
 import Menu from '@/components/Menu';
 import Container from '@/components/Container';
-
+import CarCard from '@/components/CarCard';
 
 export type UserProps = {
   name: string,
@@ -14,23 +14,26 @@ export type UserProps = {
   image: string
 }
 
-export type ContainerHandler = {
-  principal: boolean,
-  add: boolean,
-  expires: boolean,
-  car: string | false
+export type MenuHandler = "principal" | "add" | "expires" | "car" 
+
+interface ContainerInfo {
+  menuType: MenuHandler,
+  carId: string | null
 }
 
+interface FuncHandler {
+  ChangeContainer: (container: MenuHandler, carId: string | null) => void
+}
+  
 
 const Page = () => {
   
   const { data, status }  = useSession();
   
-  const initContainer: ContainerHandler = {
-    principal: true,
-    add: false,
-    expires: false,
-    car: false
+  
+  const initContainer: ContainerInfo = {
+    menuType: "principal",
+    carId: null
   }
     
   const initUser = {
@@ -39,29 +42,32 @@ const Page = () => {
     image: ""
   }
   
-  const [containerHandler, setContainerHandler] = useState<ContainerHandler>(initContainer) 
+  const [containerHandler, setContainerHandler] = useState<ContainerInfo>(initContainer) 
   const [user, setUser] = useState<UserProps>(initUser)
   
     useEffect(() => {
       console.log(containerHandler)
     }, [containerHandler])
+    
+    console.log(containerHandler)
+
   
-  const changeContainer = (container: keyof ContainerHandler, id: string | null) => {
+  const changeContainer: FuncHandler['ChangeContainer'] = (container: MenuHandler, id: string | null) => {
     switch (container) {
       case "principal": {
         setContainerHandler(initContainer)
         break
       }
       case "add": {
-        setContainerHandler(prev => ({...prev, principal: false, add: true}))
+        setContainerHandler({menuType: "add", carId: null })
         break
       }
       case "expires": {
-        setContainerHandler(prev => ({...prev, principal: false, expires: true}))
+        setContainerHandler({menuType: "expires", carId: null})
         break
       }
       case "car": {
-        setContainerHandler(prev => ({...prev, principal: false, car: id as string}))
+        setContainerHandler({menuType: "car", carId: id})
         break
       }
     }
@@ -86,12 +92,82 @@ const Page = () => {
         </div>
         <div className="col-span-8">
           <Navbar user={user} />
-          <Container>
-            <p> muie steaua </p>
-          </Container>
+          <ContainerSelect user={user} status={status} container={containerHandler}/>
         </div>
       </div>
   )
+}
+
+
+type ContainerSelectProps = {
+  container: ContainerInfo,
+  user: UserProps,
+  status: string
+}
+
+function ContainerSelect({container, user, status}: ContainerSelectProps) {
+    
+  if (container.menuType === "principal") {
+    return (
+      <Container>
+      {status === "authenticated" && <h2 className="text-lg"> Welcome, <span className="text-primary">
+      {user.name}!
+      </span>  </h2>}
+      <div className="flex"> 
+        <p> 
+        You currently have 2 cars 
+        </p> 
+        </div>
+        <div className="flex flex-col max-w-md w-full mx-auto">         
+          <div className="carousel flex">
+          <div id="item1" className="carousel-item w-1/2">
+            <CarCard color={"bg-red-300"}/>
+          </div> 
+          <div id="item1" className="carousel-item w-1/2">
+            <CarCard color={"bg-red-400"}/>
+          </div> 
+          <div id="item3" className="carousel-item w-full">
+            <CarCard color={"bg-red-600"}/>
+          </div> 
+          <div id="item4" className="carousel-item w-full">
+            <CarCard color={"bg-white"}/>
+          </div>
+        </div> 
+        <div className="flex justify-center w-full py-2 gap-2">
+          <a href="#item1" className="btn btn-xs">1</a> 
+          <a href="#item2" className="btn btn-xs">2</a> 
+          <a href="#item3" className="btn btn-xs">3</a> 
+          <a href="#item4" className="btn btn-xs">4</a>
+        </div>
+      </div>
+        <div className="">
+        
+        </div>
+      {/* <Image src={Imaged} alt="t" width="100" height="100"/> */}
+      </Container>
+    )
+  }
+  else if (container.menuType === "add") {
+    return (
+      <Container>
+      </Container>
+    )
+  }
+  else if (container.menuType === "car") {
+    return (
+      <Container>
+      <p> Car </p>
+      <p> {container.carId} </p>
+      </Container>
+    )
+  }
+  else {
+    return (
+      <Container>
+      <p> Expires </p>
+      </Container>
+    )
+  }
 }
 
 export default Page

@@ -1,11 +1,11 @@
-import { ContainerHandler } from '@/app/main/page';
+import { MenuHandler } from '@/app/main/page';
 import React from 'react'
 import { FaCar } from "react-icons/fa"
 import { FaCarOn, FaCarBurst } from "react-icons/fa6"
 import { MdCarRental } from "react-icons/md";
 
-interface MenuProps {
-  changeContainer: (container: keyof ContainerHandler, id: null | string) => void
+type MenuProps = {
+  changeContainer: (container: MenuHandler, id: null | string) => void
 }
 
 const Menu = ({changeContainer}: MenuProps) => {
