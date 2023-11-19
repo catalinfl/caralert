@@ -45,7 +45,7 @@ const Navbar = ({user}: NavbarProps) => {
     
 
   return (
-    <div className="navbar bg-base-10 justify-center bg-white border-[2px] border-secondary max-w-sm xs:max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mt-2 rounded-lg mx-auto">
+    <div className="navbar bg-base-10 justify-center bg-white border-[2px] border-primary max-w-sm xs:max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mt-2 rounded-lg mx-auto">
   <div className="flex">
     <a className="btn btn-ghost ml-5 sm:ml-0 text-sm sm:text-xl">CarAlert</a>
   </div>
