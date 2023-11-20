@@ -1,28 +1,30 @@
 import React from 'react'
 import Image from 'next/image'
 import Accident from "../../public/accident-icon.svg"
+import { redirect } from 'next/navigation'
+import { MenuHandler } from '@/app/main/page'
 
 
 type InfoCardProps = {
     img: string,
     text: string,
     textButton: string,
-    linkTo: string
+    changeContainer: (container: MenuHandler, id: null | string) => void
 }
 
 
-const InfoCard = ({img, text, textButton}: InfoCardProps) => {
+const InfoCard = ({img, text, textButton, changeContainer}: InfoCardProps) => {
   return (
-    <div className="border border-primary rounded-lg xl:ml-2 p-4 h-[300px] flex flex-col w-full justify-center items-center hover:shadow-md transition-all hover:shadow-primary">
+    <div className="border border-primary rounded-lg xl:ml-2 p-4 h-[300px] flex flex-col w-full justify-center items-center hover:shadow-md transition-all hover:shadow-primary cursor-pointer">
         <div className="flex flex-1 ">
-            <Image src={Accident} alt="car" width="100" height="100" />
+            <Image src={img} alt="car" width="100" height="100" />
         </div>
         <div className="flex flex-[2] flex-col justify-around items-center gap-y-4">
             <div className="mt-2 text-center">
-                <p>Coace doamne prunele sa umplem cazanele sa curga </p>
+                <p> {text} </p>
             </div>   
             <div className="">
-                <button className="btn btn-primary">Coace doamne prunele</button>
+                <button className="btn btn-primary" onClick={() => { changeContainer('car', null) }}> {textButton} </button>
             </div>
         </div>
     </div>

@@ -2,9 +2,9 @@ import React from 'react'
 import Img from "../../public/car.svg"
 import Image from 'next/image'
 
-const CarCard = ({color}: {color: string}) => {
+const CarCard = () => {
   return (
-    <div className={`${color} bg-neutral p-2 flex rounded-lg border-2 text-center justify-center items-center flex-col w-full h-[300px]`}>
+    <div className={`bg-neutral p-2 flex rounded-lg border-2 text-center justify-center items-center flex-col w-full h-[300px]`}>
         <div className='flex justify-center items-center w-full'>
           <Image src={Img} alt="car" width="150" height="120" />
         </div>
