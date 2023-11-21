@@ -10,10 +10,24 @@ type InfoCardProps = {
     text: string,
     textButton: string,
     changeContainer: (container: MenuHandler, id: null | string) => void
+    container: MenuHandler,
+    id: string | null,
+    hasLink: boolean
 }
 
 
-const InfoCard = ({img, text, textButton, changeContainer}: InfoCardProps) => {
+const InfoCard = ({img, text, textButton, changeContainer, container, id, hasLink}: InfoCardProps) => {
+    
+    const onClickFunc = () => {
+        if (hasLink) {
+            if (id !== null) {
+                window.location.href = `/${container}/${id}`
+            }
+            else window.location.href = `/${container}`
+        }
+        changeContainer(container, id)
+    }
+
   return (
     <div className="border border-primary rounded-lg xl:ml-2 p-4 h-[300px] flex flex-col w-full justify-center items-center hover:shadow-md transition-all hover:shadow-primary cursor-pointer">
         <div className="flex flex-1 ">
@@ -24,7 +38,7 @@ const InfoCard = ({img, text, textButton, changeContainer}: InfoCardProps) => {
                 <p> {text} </p>
             </div>   
             <div className="">
-                <button className="btn btn-primary" onClick={() => { changeContainer('car', null) }}> {textButton} </button>
+                <button className="btn btn-primary" onClick={() => onClickFunc()}> {textButton} </button>
             </div>
         </div>
     </div>
