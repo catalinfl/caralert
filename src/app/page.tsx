@@ -38,7 +38,7 @@ function Home() {
   }
   
   return (
-        <div className="flex flex-col bg-gradient-to-tr from-primary to-secondary rounded-lg min-h-[800px] p-5 mt-12 text-center md:text-start md:max-w-[1280px] w-full max-w-[400px] sm:max-w-[600px] mx-auto">
+        <div className="flex flex-col bg-gradient-to-tr from-purple-700 to-secondary rounded-lg min-h-[800px] p-5 mt-12 text-center md:text-start md:max-w-[1280px] w-full max-w-[400px] sm:max-w-[600px] mx-auto">
           <div className="flex h-[150px] sm:h-[200px]"> 
             <h1 className="text-4xl sm:text-6xl text-white font-bold">
               Foloseste pentru

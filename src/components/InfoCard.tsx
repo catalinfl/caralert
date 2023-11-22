@@ -38,7 +38,7 @@ const InfoCard = ({img, text, textButton, changeContainer, container, id, hasLin
                 <p> {text} </p>
             </div>   
             <div className="">
-                <button className="btn btn-primary" onClick={() => onClickFunc()}> {textButton} </button>
+                <button className="btn btn-primary text-white" onClick={() => onClickFunc()}> {textButton} </button>
             </div>
         </div>
     </div>

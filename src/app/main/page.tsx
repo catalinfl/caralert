@@ -5,7 +5,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import CarInspection from "../../../public/car-inspection-icon.svg"
 import CarInsurance from "../../../public/car-insurance-icon.svg"
-import CarIllustration from "../../../public/car-illustration.svg"
+import AccidentIcon from "../../../public/accident-icon.svg"
+// import CarIllustration from "../../../public/car-illustration.svg"
 import CarRepair from "../../../public/car-repair.svg"
 import Navbar from '@/components/Navbar';
 import Menu from '@/components/Menu';
@@ -13,7 +14,7 @@ import Container from '@/components/Container';
 import CarCard from '@/components/CarCard';
 import InfoCard from '@/components/InfoCard';
 
-const images: string[] = [CarInspection, CarInsurance, CarIllustration, CarRepair]
+const images: string[] = [CarInspection, CarInsurance, CarRepair, AccidentIcon]
 
 
 export type UserProps = {
@@ -144,7 +145,7 @@ function ContainerSelect({container, user, status, changeContainer}: ContainerSe
           <a href="#4" className="btn btn-xs bg-neutral text-white">4 </a>
         </div>
       </div>
-        <div className="flex flex-col xl:flex-row mx-auto lg:w-1/2 xl:w-full gap-4 xl:gap-8 mt-8 xl:mt-8 selection:bg-transparent">
+        <div className="flex flex-col xl:flex-row mx-auto lg:w-1/2 xl:w-full gap-2 xl:gap-4 mt-8 xl:mt-8 selection:bg-transparent">
           <InfoCard img={images[0]} text='Add a new car to your account' textButton='Add' hasLink={true} changeContainer={changeContainer} container='add' id={null} />
           <InfoCard img={images[1]} text='Add a reminder for a car' textButton='Set reminder' changeContainer={changeContainer} container='add' id={null} hasLink={false}/>
           <InfoCard img={images[2]} text='Edit a car' textButton='Edit' changeContainer={changeContainer} container='edit' id={null} hasLink={true}/>
@@ -155,17 +156,14 @@ function ContainerSelect({container, user, status, changeContainer}: ContainerSe
     )
   }
   else if (container.menuType === "add") {
-    return (
-      <Container>
-        <p> test </p>
-      </Container>
-    )
+    redirect("/add")
   }
   else if (container.menuType === "car") {
     return (
       <Container>
-      <p> Car </p>
-      <p> {container.carId} </p>
+        <div className="">
+          <p> test </p>
+        </div>
       </Container>
     )
   }

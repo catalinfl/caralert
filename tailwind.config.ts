@@ -17,7 +17,10 @@ const config: Config = {
     themes: [{
       light: {
         ...light,
-        'neutral': '#4F46E5', 
+        'neutral': '#800080', 
+        'primary': '#BF40BF'
+        // make this primary colour more lighter
+    
       }
     }]
   }
