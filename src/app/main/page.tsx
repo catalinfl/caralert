@@ -42,7 +42,7 @@ const Page = () => {
   const initContainer: ContainerInfo = {
     menuType: "principal",
     carId: null
-  }
+  }  
     
   const initUser = {
     name: "",

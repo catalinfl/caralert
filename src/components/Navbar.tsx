@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import { signOut } from 'next-auth/react'
 import { UserProps } from '@/app/main/page'
+import Link from 'next/link'
 
-type OpenType = "menu" | "dropdown" | "none"
 
 interface NavbarProps {
   user: UserProps
@@ -47,7 +47,9 @@ const Navbar = ({user}: NavbarProps) => {
   return (
     <div className="navbar bg-base-10 justify-center bg-white border-[2px] border-primary max-w-sm xs:max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mt-2 rounded-lg mx-auto">
   <div className="flex">
-    <a className="btn btn-ghost ml-5 sm:ml-0 text-sm sm:text-xl">CarAlert</a>
+    <Link href="/">
+      <button className="btn btn-ghost ml-5 sm:ml-0 text-sm sm:text-xl">CarAlert</button>
+    </Link>
   </div>
   <div className="flex-grow justify-end flex-row gap-0 md:gap-2">  
   <ul className="menu menu-horizontal xl:hidden flex rounded-sm bg-secondary text-white">
