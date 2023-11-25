@@ -48,7 +48,7 @@ const Navbar = ({user}: NavbarProps) => {
     <div className="navbar bg-base-10 justify-center bg-white border-[2px] border-primary max-w-sm xs:max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mt-2 rounded-lg mx-auto">
   <div className="flex">
     <Link href="/">
-      <button className="btn btn-ghost ml-5 sm:ml-0 text-sm sm:text-xl">CarAlert</button>
+      <button className="btn btn-ghost ml-5 sm:ml-0 text-primary text-sm sm:text-xl">CarAlert</button>
     </Link>
   </div>
   <div className="flex-grow justify-end flex-row gap-0 md:gap-2">  

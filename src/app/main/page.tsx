@@ -6,6 +6,7 @@ import Image from 'next/image'
 import CarInspection from "../../../public/car-inspection-icon.svg"
 import CarInsurance from "../../../public/car-insurance-icon.svg"
 import AccidentIcon from "../../../public/accident-icon.svg"
+import CarMaintenance from "../../../public/car-maintenance.svg"
 // import CarIllustration from "../../../public/car-illustration.svg"
 import CarRepair from "../../../public/car-repair.svg"
 import Navbar from '@/components/Navbar';
@@ -13,6 +14,8 @@ import Menu from '@/components/Menu';
 import Container from '@/components/Container';
 import CarCard from '@/components/CarCard';
 import InfoCard from '@/components/InfoCard';
+import Expire from '@/components/Expire';
+
 
 const images: string[] = [CarInspection, CarInsurance, CarRepair, AccidentIcon]
 
@@ -123,7 +126,7 @@ function ContainerSelect({container, user, status, changeContainer}: ContainerSe
       {status === "authenticated" && <h2 className="text-lg my-4 ml-4"> Welcome, <span className="text-primary">
       {user.name}! </span> You have currently 3 cars registered.
       </h2>}
-        <div className="flex flex-col max-w-2xl p-2 w-full mx-auto" onLoad={(e: React.ChangeEvent<HTMLDivElement>) => e.preventDefault()}>         
+        <div className="flex flex-col bg-primary rounded-lg max-w-2xl p-2 w-full mx-auto" onLoad={(e: React.ChangeEvent<HTMLDivElement>) => e.preventDefault()}>         
           <div className="carousel flex">
           <div id="1" className="carousel-item w-full md:w-1/2">
             <CarCard/>
@@ -161,8 +164,48 @@ function ContainerSelect({container, user, status, changeContainer}: ContainerSe
   else if (container.menuType === "car") {
     return (
       <Container>
-        <div className="">
-          <p> test </p>
+        <div className="flex flex-col items-center">
+          <h2 className="text-3xl md:text-4xl mb-8 text-primary font-bold"> Opel astra h </h2>
+          <Image src={CarInspection} className="mb-4 bg-primary p-2 rounded-lg" alt="inspection" width="150" height="400" />
+        </div>
+        <div className="flex gap-y-2 flex-col justify-start w-[80%] bg-primary mx-auto p-3 text-white font-semibold rounded-lg">
+          <p> Car model:  <span className="font-light"> Opel Astra H </span> </p>
+          <p> Car plate: <span className="font-light"> MH 33 BLM </span> </p>
+          <p> Car colour: <span className="font-light"> Black </span> </p>
+          <p> Car description: </p>
+          <p className="font-light p-2 bg-neutral"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis, quam maxime itaque veniam fugit nobis nostrum exercitationem rem error incidunt minima sed beatae saepe atque repellat iusto animi nam doloribus nisi culpa! Voluptate commodi, esse nihil recusandae voluptatibus reiciendis similique itaque nam, natus modi ad fuga voluptates libero laboriosam iusto. </p>
+          <div className="flex flex-col md:flex-row items-center gap-5 bg-neutral p-4">
+            <div className="flex flex-1"> 
+            <p> Insurance expires: <span className="font-light"> Black </span> </p>
+            </div>
+            <div className="flex flex-1 items-center gap-5">
+            <progress className="progress progress-primary w-32 md:w-48 lg:w-56 h-3" value="70" max="100"></progress> 30% - 3 months left 
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row items-center gap-5 bg-neutral p-4">
+            <div className="flex flex-1"> 
+            <p> ITP expires: <span className="font-light"> Black </span> </p>
+            </div>
+            <div className="flex flex-1 items-center gap-5">
+            <progress className="progress progress-primary w-32 md:w-48 lg:w-56 h-3" value="70" max="100"></progress> 30% - 3 months left 
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row items-center gap-5 bg-neutral p-4">
+            <div className="flex flex-1"> 
+            <p> Rovignette expires: <span className="font-light"> Black </span> </p>
+            </div>
+            <div className="flex flex-1 items-center gap-5">
+            <progress className="progress progress-primary w-32 md:w-48 lg:w-56 h-3" value="70" max="100"></progress> 30% - 3 months left 
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row items-center gap-5 bg-neutral p-4">
+            <div className="flex flex-1"> 
+            <p> Reparation expires: <span className="font-light"> Black </span> </p>
+            </div>
+            <div className="flex flex-1 items-center gap-5">
+            <progress className="progress progress-primary w-32 md:w-48 lg:w-56 h-3" value={40} max="100"></progress> 30% - 3 months left 
+            </div>
+          </div>
         </div>
       </Container>
     )
@@ -170,7 +213,12 @@ function ContainerSelect({container, user, status, changeContainer}: ContainerSe
   else {
     return (
       <Container>
-      <p> Expires </p>
+        <div className="flex flex-col justify-center items-center gap-y-2">
+          <Expire />
+          <Expire />
+          <Expire />
+          <Expire />          
+        </div>
       </Container>
     )
   }

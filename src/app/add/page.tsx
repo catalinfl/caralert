@@ -61,10 +61,16 @@ const Page = () => {
     const focusElement = (id: number) => {
       setCalendarNum(id)
     }
+    const { data, status } = useSession()
+    
+    useEffect(() => {
+      if (status === "unauthenticated") {
+        window.location.href = "/"
+      }
+    }, [status])
     
 
 
-  const { data, status } = useSession()
   if (status === "authenticated") {
     return (
       <div className="">
@@ -103,7 +109,7 @@ const Page = () => {
               <input ref={refRovigniette} type="text" onFocus={() => focusElement(3)} placeholder="Add expire date" className="input 
               input-bordered w-full max-w-xs"/>
               {calendarNum === 3 ? <Calendar minDate={new Date()} className={'bg-primary p-3'} onChange={onChange} value={value}/> : null}
-              <button className="btn btn-secondary mt-4"> Testing </button>
+              <button className="btn btn-neutral mt-4"> Testing </button>
             </div>
             </div>
             <div className="flex flex-1 flex-col justify-center items-center"> 
