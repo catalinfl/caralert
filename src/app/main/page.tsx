@@ -46,6 +46,12 @@ const Page = () => {
     menuType: "principal",
     carId: null
   }  
+  
+  const date = "11/29/2023"
+  
+  const date2 = new Date(date)
+  const formattedDate = date2.toLocaleDateString();
+  console.log(formattedDate);
     
   const initUser = {
     name: "",

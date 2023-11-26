@@ -8,7 +8,7 @@ const Expire = () => {
         <p className="font-bold"> Carplate: <span className="font-light"> AG 35 BLM </span>  </p>
         <div className="flex flex-row bg-white gap-y-2 text-primary items-center justify-center mt-2">
             <div className="flex-1 text-primary ml-4 items-center flex py-4 flex-row">
-                <IoWarningOutline className="text-primary text-3xl" />
+                <IoWarningOutline className="text-primary text-3xl hidden lg:flex" />
                 <p className="ml-2 font-bold"> Rovignette expires in 25 days - 30.12.2025 </p>
             </div>
             <div className="flex flex-1 justify-end items-center p-2 mr-4">
@@ -17,7 +17,7 @@ const Expire = () => {
         </div>
         <div className="flex flex-row bg-white gap-y-2 text-primary items-center justify-center mt-2">
             <div className="flex-1 text-primary ml-4 items-center flex py-4 flex-row">
-                <IoWarningOutline className="text-primary text-3xl" />
+                <IoWarningOutline className="text-primary text-3xl hidden lg:flex" />
                 <p className="ml-2 font-bold"> Rovignette expires in 25 days - 30.12.2025 </p>
             </div>
             <div className="flex flex-1 justify-end items-center p-2 mr-4">

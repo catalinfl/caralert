@@ -12,22 +12,39 @@ import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
-
-
 type Car = string;
 
 type Cars = Car[];
 
 
 function Home() {
-
-  const session = useSession();
   
+  const session = useSession();
   useEffect(() => {
+  
+    async function fetchData() {
+      try {
+        if (session.status === "authenticated") {
+          const { name, email } = (session.data?.user as { name?: string; email?: string; image?: string }) || {};
+          const res = await fetch("/api/user", {
+            method: "POST",
+            body: JSON.stringify({"name": name, "email": email})
+          })
+        }          
+      }
+      catch(err) {
+        console.log(err)
+      }
+    }
+    
+    fetchData()
+    
     if (session.status === "authenticated") {
       redirect("/main")
     }
   }, [session])
+  
+  
   
   const cars: Cars = [Coupe, Coupe2, Coupe3, Coupe4, Coupe5, Coupe6]
   const [car, setCar] = useState<Car>(Coupe)
