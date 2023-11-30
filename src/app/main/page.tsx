@@ -6,8 +6,9 @@ import Image from 'next/image'
 import CarInspection from "../../../public/car-inspection-icon.svg"
 import CarInsurance from "../../../public/car-insurance-icon.svg"
 import AccidentIcon from "../../../public/accident-icon.svg"
-import CarMaintenance from "../../../public/car-maintenance.svg"
 // import CarIllustration from "../../../public/car-illustration.svg"
+import CarPark from "../../../public/carpark.svg"
+
 import CarRepair from "../../../public/car-repair.svg"
 import Navbar from '@/components/Navbar';
 import Menu from '@/components/Menu';
@@ -15,10 +16,18 @@ import Container from '@/components/Container';
 import CarCard from '@/components/CarCard';
 import InfoCard from '@/components/InfoCard';
 import Expire from '@/components/Expire';
-
+import { CiEdit } from 'react-icons/ci';
+import { MdDelete, MdDeleteOutline } from "react-icons/md";
 
 const images: string[] = [CarInspection, CarInsurance, CarRepair, AccidentIcon]
 
+
+export type ContainerSelectProps = {
+  container: ContainerInfo,
+  user: UserProps,
+  status: string
+  changeContainer: (container: MenuHandler, carId: string | null) => void
+}
 
 export type UserProps = {
   name: string,
@@ -33,25 +42,19 @@ export interface ContainerInfo {
   carId: string | null
 }
 
-interface FuncHandler {
+export interface FuncHandler {
   changeContainer: (container: MenuHandler, carId: string | null) => void
 }
   
+export const initContainer: ContainerInfo = {
+  menuType: "principal",
+  carId: null
+}  
 
 const Page = () => {
   
   const { data, status }  = useSession();
   
-  const initContainer: ContainerInfo = {
-    menuType: "principal",
-    carId: null
-  }  
-  
-  const date = "11/29/2023"
-  
-  const date2 = new Date(date)
-  const formattedDate = date2.toLocaleDateString();
-  console.log(formattedDate);
     
   const initUser = {
     name: "",
@@ -102,6 +105,22 @@ const Page = () => {
     }
   }, [data, status])
   
+  
+  
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/car", { method: "GET" });
+        console.log(await res.json());
+      } catch (err) {
+        console.log(err);
+      }
+    };
+  
+    fetchData();
+  });
+  
 
   
   return (
@@ -117,12 +136,6 @@ const Page = () => {
   )
 }
 
-type ContainerSelectProps = {
-  container: ContainerInfo,
-  user: UserProps,
-  status: string
-  changeContainer: (container: MenuHandler, carId: string | null) => void
-}
 
 function ContainerSelect({container, user, status, changeContainer}: ContainerSelectProps) {
     
@@ -170,9 +183,20 @@ function ContainerSelect({container, user, status, changeContainer}: ContainerSe
   else if (container.menuType === "car") {
     return (
       <Container>
-        <div className="flex flex-col items-center">
-          <h2 className="text-3xl md:text-4xl mb-8 text-primary font-bold"> Opel astra h </h2>
-          <Image src={CarInspection} className="mb-4 bg-primary p-2 rounded-lg" alt="inspection" width="150" height="400" />
+        <div className="flex flex-col">
+          <div>
+            <Image src={CarPark} className="mx-auto mb-4 p-2 rounded-lg" alt="inspection" width="250" height="400" />
+          </div>
+        <div className="flex flex-row w-full gap-5 max-w-[200px] justify-center mx-auto rounded-lg bg-neutral my-3 p-2">
+          <div className="flex flex-col cursor-pointer justify-center items-center text-white font-bold">
+            <CiEdit className="text-7xl text-white border-2 border-white"/>
+            <p> Edit </p>
+          </div>
+          <div className="flex flex-col cursor-pointer justify-center items-center text-white font-bold">
+            <MdDeleteOutline className="text-7xl text-white border-2 border-white"/>
+            <p> Delete </p>
+          </div>
+        </div>
         </div>
         <div className="flex gap-y-2 flex-col justify-start w-[80%] bg-primary mx-auto p-3 text-white font-semibold rounded-lg">
           <p> Car model:  <span className="font-light"> Opel Astra H </span> </p>

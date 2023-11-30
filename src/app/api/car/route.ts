@@ -1,9 +1,14 @@
 import { prisma } from "@/prisma";
-import { NextApiRequest } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
+import { getSession } from "next-auth/react";
+import { authOptions } from "../auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
 
-export const POST = async (req: Request) => {
+
+export const POST = async (req: NextApiRequest & Request) => {
     const { name, carDetails } = await req.json();
+    
     try {
         const user = await prisma.user.findFirst({
             where: {
@@ -42,14 +47,3 @@ export const POST = async (req: Request) => {
     }
 }
 
-// export const GET = async (req: NextApiRequest) => {
-//     try {
-//         const {  } = await req.query;
-        
-//         const user = await prisma.user.findFirst({
-//             where: {
-                
-//             }
-//         })
-//     }
-// }

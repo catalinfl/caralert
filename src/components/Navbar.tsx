@@ -79,11 +79,11 @@ const Navbar = ({user}: NavbarProps) => {
     <div className="dropdown dropdown-end flex justify-center w-36 md:w-42">
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
-          <Image src={user.image} alt="avatar" width="40" height="40" /> 
+          <Image src={user?.image} alt="avatar" width="40" height="40" /> 
         </div>
       </label>
       <ul tabIndex={0} className="mt-16 z-[1] p-2 menu menu-sm dropdown-content bg-base-100 rounded-box w-36 md:w-42">
-        <li><a>{user.name}</a></li>
+        <li><a>{user?.name}</a></li>
         <li onClick={() => signOut()}><a>Logout</a></li>
       </ul>
     </div>
