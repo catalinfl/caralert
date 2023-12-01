@@ -7,34 +7,12 @@ import { ContainerInfo, FuncHandler, MenuHandler, UserProps, initContainer } fro
 import { redirect } from 'next/navigation';
 import Menu from '@/components/Menu';
 import Container from '@/components/Container';
+import { changeContainer } from '@/misc/changeContainer';
 
 const EditPage = () => {
     
     const { data, status } = useSession();
-    
-    const [containerHandler, setContainerHandler] = useState<ContainerInfo>(initContainer)
-    
-    const changeContainer: FuncHandler['changeContainer'] = (container: MenuHandler, id: string | null) => {
-        switch (container) {
-          case "principal": {
-            window.location.href="/main"
-            break
-          }
-          case "add": {
-            window.location.href="/add"
-            break
-          }
-          case "expires": {
-            window.location.href="/main"
-            break
-          }
-          case "car": {
-            window.location.href="/main"
-            break
-          }
-        }
-      }
-    
+  
     useEffect(() => {
         if (status === "unauthenticated") {
             redirect("/")

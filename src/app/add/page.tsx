@@ -9,6 +9,8 @@ import CarInsurance from "@/../public/car-insurance.svg"
 import Image from 'next/image'
 import { Calendar } from "react-calendar" 
 import 'react-calendar/dist/Calendar.css'
+import Menu from '@/components/Menu'
+import { changeContainer } from '@/misc/changeContainer'
 
 type ValuePiece = Date | null;
 
@@ -111,54 +113,60 @@ const Page = () => {
     }
     
     console.log(createCar)
+    
 
   if (status === "authenticated") {
     return (
-      <div className="">
-        <Navbar user={data?.user as UserProps} />
-        <Container>
-          <div className="flex flex-col md:flex-row">
-            <div className="flex flex-col flex-1 justify-center items-center ">
-              <h2 className='text-primary text-center font-bold text-[2rem]'> Add a car </h2> 
-            <div className="form-control w-full flex justify-center items-center max-w-md gap-2 bg-primary p-6 rounded-lg mt-4">
-              <label className="label">
-                <span className="label-text text-white">Car model</span>
-              </label>
-              <input type="text" placeholder="Type here" maxLength={40} className="input input-bordered w-full max-w-xs" onChange={(e: ChangeEvent<HTMLInputElement>) => createCarHandler(e, "model")} />
-              <label className="label">
-                <span className="label-text text-white">Carplate</span>
-              </label>
-              <input type="text" placeholder="Type here" maxLength={40} className="input input-bordered w-full max-w-xs" onChange={(e: ChangeEvent<HTMLInputElement>) => createCarHandler(e, "carplate")}/>
-              <label className="label">
-                <span className="label-text text-white"> Colour </span>
-              </label>
-              <input type="text" placeholder="Type here" maxLength={40} className="input input-bordered w-full max-w-xs" onChange={(e: ChangeEvent<HTMLInputElement>) => createCarHandler(e, "colour")} />
-              <label className="label">
-                <span className="label-text text-white"> Insurance expries </span>
-              </label>
-              <input ref={refInsurance}  type="text" maxLength={10} disabled={calendarNum === 1 ? true : false} onFocus={() => focusElement(1)} placeholder="Add expire date" className="input input-bordered w-full max-w-xs" />
-              {calendarNum === 1 ? <Calendar minDate={new Date()}  className={'bg-primary p-3'} onChange={onChange} value={value}/> : null}              
-              <label className="label">
-                <span className="label-text text-white"> ITP expires </span>
-              </label>
-              <input ref={refITP} type="text" maxLength={10} disabled={calendarNum === 2 ? true : false}  onFocus={() => focusElement(2)} placeholder="Add expire date" className="input 
-              input-bordered w-full max-w-xs" />
-              {calendarNum === 2 ? <Calendar minDate={new Date()}  className={'bg-primary p-3'} onChange={onChange} value={value ? value : null}/> : null}              
-              <label className="label">
-                <span className="label-text text-white"> Rovigniette  </span>
-              </label>
-              <input ref={refRovigniette} type="text" maxLength={40} disabled={calendarNum === 3 ? true : false}  onFocus={() => focusElement(3)} placeholder="Add expire date" className="input 
-              input-bordered w-full max-w-xs"/>
-              {calendarNum === 3 ? <Calendar minDate={new Date()} className={'bg-primary p-3'} onChange={onChange} value={value}/> : null}
-              <button className="btn btn-neutral mt-4" onClick={() => onSend()}> Testing </button>
+      <div className="flex w-full justify-center sm:grid sm:grid-cols-12 sm:gap-4">
+        <div className="col-span-2 mt-16">
+          <Menu changeContainer={changeContainer} />
+        </div>
+        <div className="col-span-8">
+          <Navbar user={data?.user as UserProps} />
+          <Container>
+            <div className="flex flex-col md:flex-row">
+              <div className="flex flex-col flex-1 justify-center items-center ">
+                <h2 className='text-primary text-center font-bold text-[2rem]'> Add a car </h2> 
+              <div className="form-control w-full flex justify-center items-center max-w-md gap-2 bg-primary p-6 rounded-lg mt-4">
+                <label className="label">
+                  <span className="label-text text-white">Car model</span>
+                </label>
+                <input type="text" placeholder="Type here" maxLength={40} className="input input-bordered w-full max-w-xs" onChange={(e: ChangeEvent<HTMLInputElement>) => createCarHandler(e, "model")} />
+                <label className="label">
+                  <span className="label-text text-white">Carplate</span>
+                </label>
+                <input type="text" placeholder="Type here" maxLength={40} className="input input-bordered w-full max-w-xs" onChange={(e: ChangeEvent<HTMLInputElement>) => createCarHandler(e, "carplate")}/>
+                <label className="label">
+                  <span className="label-text text-white"> Colour </span>
+                </label>
+                <input type="text" placeholder="Type here" maxLength={40} className="input input-bordered w-full max-w-xs" onChange={(e: ChangeEvent<HTMLInputElement>) => createCarHandler(e, "colour")} />
+                <label className="label">
+                  <span className="label-text text-white"> Insurance expries </span>
+                </label>
+                <input ref={refInsurance}  type="text" maxLength={10} disabled={calendarNum === 1 ? true : false} onFocus={() => focusElement(1)} placeholder="Add expire date" className="input input-bordered w-full max-w-xs" />
+                {calendarNum === 1 ? <Calendar minDate={new Date()}  className={'bg-primary p-3'} onChange={onChange} value={value}/> : null}              
+                <label className="label">
+                  <span className="label-text text-white"> ITP expires </span>
+                </label>
+                <input ref={refITP} type="text" maxLength={10} disabled={calendarNum === 2 ? true : false}  onFocus={() => focusElement(2)} placeholder="Add expire date" className="input 
+                input-bordered w-full max-w-xs" />
+                {calendarNum === 2 ? <Calendar minDate={new Date()}  className={'bg-primary p-3'} onChange={onChange} value={value ? value : null}/> : null}              
+                <label className="label">
+                  <span className="label-text text-white"> Rovigniette  </span>
+                </label>
+                <input ref={refRovigniette} type="text" maxLength={40} disabled={calendarNum === 3 ? true : false}  onFocus={() => focusElement(3)} placeholder="Add expire date" className="input 
+                input-bordered w-full max-w-xs"/>
+                {calendarNum === 3 ? <Calendar minDate={new Date()} className={'bg-primary p-3'} onChange={onChange} value={value}/> : null}
+                <button className="btn btn-neutral mt-4" onClick={() => onSend()}> Testing </button>
+              </div>
+              </div>
+              <div className="flex flex-1 flex-col justify-center items-center"> 
+              <Image src={Illustration} alt="illustration" width="600" height="500"/>
+              <Image src={CarInsurance} alt="insurance" width="600" height="500" />
+              </div>
             </div>
-            </div>
-            <div className="flex flex-1 flex-col justify-center items-center"> 
-            <Image src={Illustration} alt="illustration" width="600" height="500"/>
-            <Image src={CarInsurance} alt="insurance" width="600" height="500" />
-            </div>
-          </div>
-        </Container>
+          </Container>
+        </div>
       </div>
     )  
   }

@@ -29,7 +29,7 @@ const InfoCard = ({img, text, textButton, changeContainer, container, id, hasLin
     }
 
   return (
-    <div className="border border-primary rounded-lg xl:ml-2 p-4 h-[300px] flex flex-col w-full justify-center items-center hover:shadow-md transition-all hover:shadow-primary cursor-pointer">
+    <div className={`border border-primary rounded-lg xl:ml-2 p-4 h-[300px] flex flex-col w-full justify-center items-center hover:shadow-md transition-all hover:shadow-primary cursor-pointer`}>
         <div className="flex flex-1 ">
             <Image src={img} alt="car" width="100" height="100" />
         </div>

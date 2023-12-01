@@ -18,6 +18,7 @@ import InfoCard from '@/components/InfoCard';
 import Expire from '@/components/Expire';
 import { CiEdit } from 'react-icons/ci';
 import { MdDelete, MdDeleteOutline } from "react-icons/md";
+import { Car } from '../add/page';
 
 const images: string[] = [CarInspection, CarInsurance, CarRepair, AccidentIcon]
 
@@ -27,6 +28,7 @@ export type ContainerSelectProps = {
   user: UserProps,
   status: string
   changeContainer: (container: MenuHandler, carId: string | null) => void
+  carData: null | { cars: Car[] & string }
 }
 
 export type UserProps = {
@@ -54,8 +56,7 @@ export const initContainer: ContainerInfo = {
 const Page = () => {
   
   const { data, status }  = useSession();
-  
-    
+      
   const initUser = {
     name: "",
     email: "",
@@ -64,13 +65,6 @@ const Page = () => {
   
   const [containerHandler, setContainerHandler] = useState<ContainerInfo>(initContainer) 
   const [user, setUser] = useState<UserProps>(initUser)
-  
-    useEffect(() => {
-      console.log(containerHandler)
-    }, [containerHandler])
-    
-    console.log(containerHandler)
-
   
   const changeContainer: FuncHandler['changeContainer'] = (container: MenuHandler, id: string | null) => {
     switch (container) {
@@ -93,34 +87,38 @@ const Page = () => {
     }
   }
   
-  
+  const [carData, setCarData] = useState<null | { cars: Car[] & string } >(null)
 
-  useEffect(() => {
-    if (status === "authenticated") {
-      const user: UserProps = data.user as UserProps 
-      setUser(user)
-    }
-    else if (status === "unauthenticated") {
-      redirect("/")
-    }
-  }, [data, status])
-  
-  
-  
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/car", { method: "GET" });
-        console.log(await res.json());
+        const nameForURL = encodeURIComponent(user.name)
+        console.log(nameForURL)
+        const res = await fetch(`http://localhost:3000/api/user/${nameForURL}`, { method: "GET" })
+        if (res.ok) {
+          const data = await res.json();
+          setCarData(data)
+          console.log(data)
+        }
       } catch (err) {
         console.log(err);
       }
     };
-  
-    fetchData();
-  });
-  
+    
+    if (status === "authenticated") {
+      const user: UserProps = data.user as UserProps 
+      setUser(user)
+      fetchData();
+    }
+    
+    if (status === "unauthenticated") {
+      redirect("/")
+    }
+    
+  }, [status, user, data])
+
+  console.log(user)
 
   
   return (
@@ -130,43 +128,85 @@ const Page = () => {
         </div>
         <div className="col-span-8">
           <Navbar user={user} />
-          <ContainerSelect changeContainer={changeContainer} user={user} status={status} container={containerHandler}/>
+          <ContainerSelect changeContainer={changeContainer} user={user} status={status} container={containerHandler} carData={carData}/>
         </div>
       </div>
   )
 }
 
 
-function ContainerSelect({container, user, status, changeContainer}: ContainerSelectProps) {
+function ContainerSelect({container, user, status, changeContainer, carData}: ContainerSelectProps) {
     
   if (container.menuType === "principal") {
     return (
       <Container>
       {status === "authenticated" && <h2 className="text-lg my-4 ml-4"> Welcome, <span className="text-primary">
-      {user.name}! </span> You have currently 3 cars registered.
+      {user.name}! </span> You have currently {carData?.cars?.length} cars registered.
       </h2>}
-        <div className="flex flex-col bg-primary rounded-lg max-w-2xl p-2 w-full mx-auto" onLoad={(e: React.ChangeEvent<HTMLDivElement>) => e.preventDefault()}>         
-          <div className="carousel flex">
-          <div id="1" className="carousel-item w-full md:w-1/2">
-            <CarCard/>
-          </div> 
-          <div id="2" className="carousel-item w-full md:w-1/2">
-            <CarCard/>
-          </div> 
-          <div id="3" className="carousel-item w-full">
-            <CarCard/>
-          </div> 
-          <div id="4" className="carousel-item w-full">
-            <CarCard/>
+      <div className="flex flex-col bg-primary rounded-lg max-w-2xl p-2 w-full mx-auto">
+  <div className="carousel flex">
+    {carData?.cars?.map((car: Car, index) => {   
+      if (index === 0) {
+        return (
+          <div key={car._id} id="1" className="carousel-item w-1/2">
+            <CarCard carData={car} />
           </div>
-        </div> 
-        <div className="flex justify-center bg-neutral rounded-lg w-full py-2 gap-2">
-          <a href="#1" className="btn btn-xs bg-neutral text-white">1</a> 
-          <a href="#2" className="btn btn-xs bg-neutral text-white">2</a> 
-          <a href="#3" className="btn btn-xs bg-neutral text-white">3</a> 
-          <a href="#4" className="btn btn-xs bg-neutral text-white">4 </a>
-        </div>
-      </div>
+        );
+      }
+      if (index === carData.cars.length - 1) {
+        return (
+          <div key={car._id} id={(carData.cars.length).toString()} className="carousel-item w-1/2">
+            <CarCard carData={car} />
+          </div>
+        );
+        }
+      if (carData.cars.length % 2 === 0) {
+        if (index % 2 !== 0) {
+          const indexGroup = Math.floor(index / 2) + 1;
+          console.log(indexGroup)
+          return (
+            <div key={car._id} id={indexGroup.toString()} className="carousel-item w-1/2">
+              <CarCard carData={car} />
+            </div>
+          );
+        }      
+      }
+      if (carData.cars.length % 2 !== 0) {
+        if (index % 2 === 0) {
+          const indexGroup = Math.floor(index / 2) + 1;
+          console.log(indexGroup)
+          return (
+            <div key={car._id} id={indexGroup.toString()} className="carousel-item w-1/2">
+              <CarCard carData={car} />
+            </div>
+          );
+        }
+      }
+      
+        return (
+          <div key={car._id} className="carousel-item w-1/2">
+            <CarCard carData={car} />
+          </div>
+        )
+    })}
+  </div>
+  <div className="flex justify-center bg-neutral rounded-lg w-full py-2 gap-2">
+    {carData?.cars?.map((_, index) => {
+      if (index % 2 === 0) {
+        const groupIndex = Math.floor(index / 2) + 1;
+        console.log(groupIndex)
+        const anchorId = `#${groupIndex}`;
+
+        return (
+          <a key={index} href={anchorId} className="btn btn-xs bg-neutral text-white">
+            {groupIndex}
+          </a>
+        );
+      }
+      return null;
+    })}
+  </div>
+</div>
         <div className="flex flex-col xl:flex-row mx-auto lg:w-1/2 xl:w-full gap-2 xl:gap-4 mt-8 xl:mt-8 selection:bg-transparent">
           <InfoCard img={images[0]} text='Add a new car to your account' textButton='Add' hasLink={true} changeContainer={changeContainer} container='add' id={null} />
           <InfoCard img={images[1]} text='Add a reminder for a car' textButton='Set reminder' changeContainer={changeContainer} container='add' id={null} hasLink={false}/>
