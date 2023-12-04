@@ -83,7 +83,7 @@ export const DELETE = async (req: NextApiRequest & Request, { params }: { params
                 id: params.id
             }
         })
-        return NextResponse.json({"success": "car was deleted"}, { status: 200 });
+        return NextResponse.json({"success": "car was deleted", car}, { status: 200 });
     }
     catch(err) {
         return NextResponse.json(err);

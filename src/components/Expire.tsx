@@ -1,11 +1,21 @@
+import { Car } from '@/app/add/page';
 import React from 'react'
 import { IoWarningOutline } from "react-icons/io5";
 
-const Expire = () => {
+
+export type ExpireType = {
+    expireCar?: Car,
+    expireVignette?: boolean,
+    expireITP?: boolean,
+    expireInsurance?: boolean
+}
+
+const Expire = ({ expireCar, expireVignette, expireITP, expireInsurance }: ExpireType) => {
+
   return (
     <div className="flex flex-col rounded-lg p-4 w-full bg-primary text-white">
-        <p className="font-bold"> Model: <span className="font-light"> test model </span> </p>
-        <p className="font-bold"> Carplate: <span className="font-light"> AG 35 BLM </span>  </p>
+        <p className="font-bold"> Model: <span className="font-light"> {expireCar?.model} </span> </p>
+        <p className="font-bold"> Carplate: <span className="font-light"> {expireCar?.carplate} </span>  </p>
         <div className="flex flex-row bg-white gap-y-2 text-primary items-center justify-center mt-2">
             <div className="flex-1 text-primary ml-4 items-center flex py-4 flex-row">
                 <IoWarningOutline className="text-primary text-3xl hidden lg:flex" />

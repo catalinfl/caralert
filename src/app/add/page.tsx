@@ -21,8 +21,8 @@ type Calendar = {
   value: Value
 }
 
-type CreateCar = {
-    _id?: string,
+export type Car = {
+    id?: string,
     model: string,
     colour: string,
     carplate: string,
@@ -37,7 +37,7 @@ const Page = () => {
   
   const [value, onChange] = useState<Value>(new Date());
   const [calendarNum, setCalendarNum] = useState<number>(0);
-  const [createCar, setCreateCar] = useState<CreateCar>({
+  const [createCar, setCreateCar] = useState<Car>({
     model: "",
     colour: "",
     carplate: "",
@@ -88,7 +88,7 @@ const Page = () => {
       }
     }, [status])
   
-    const createCarHandler = (e: ChangeEvent<HTMLInputElement>, type: keyof CreateCar) => {
+    const createCarHandler = (e: ChangeEvent<HTMLInputElement>, type: keyof Car) => {
           if (e.target.value !== null && e.target.value !== undefined) {
             if (e.target.value.length >= 3 && e.target.value.length < 40) {
               setCreateCar(prevCreateCar => ({ ...prevCreateCar, [type]: e.target?.value }))        

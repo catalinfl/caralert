@@ -13,6 +13,12 @@ export const POST = async (req: NextApiRequest & Request) => {
             }
         })
         
+        const carCount = await prisma.car.count()
+        
+        if (carCount >= 12) {
+            return NextResponse.json({ "error": "You can't add more than 12 cars", carCount }, { status: 400})
+        }
+        
         if (user) {
             const newCar = await prisma.car.create({
                 data: {
