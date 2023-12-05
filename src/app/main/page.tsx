@@ -298,18 +298,28 @@ function ContainerSelect({container, user, status, changeContainer, carData}: Co
     })
     
     
+    
   
     return (
       <Container>
         <div className="flex flex-col justify-center items-center gap-y-2">
           {carData?.cars.map((car: Car, index: number) => {
-            console.log(car)
-            if ((expiredInsurances?.findIndex((c) => c.carplate === car.carplate) === index) || (expiredItp?.findIndex((c) => c.carplate === car.carplate) === index) || (expiredVignette?.findIndex((c) => c.carplate === car.carplate) === index)) {
-            console.log(car)
-            return (
-              <Expire key={index} expireCar={car} />
-            )
-          }
+            
+            var expiredInsBool = false, expiredItpBool = false, expiredVigBool = false;
+            
+            if (expiredInsurances?.some((c: Car) => c.carplate === car.carplate)) {
+               expiredInsBool = true;
+            }
+            if (expiredItp?.some((c: Car) => c.carplate === car.carplate)) {
+              expiredItpBool = true;
+            }
+            if (expiredVignette?.some((c: Car) => c.carplate === car.carplate)) {
+              expiredVigBool = true;
+            }
+                        
+            if (expiredInsBool || expiredItpBool || expiredVigBool) {
+              return <Expire key={index} expireCar={car} expireInsurance={expiredInsBool} expireITP={expiredItpBool} expireVignette={expiredVigBool} />;
+            }
           })
           }
         </div>
