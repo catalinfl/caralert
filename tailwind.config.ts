@@ -3,6 +3,7 @@ import daisyui from 'daisyui'
 import themes from "daisyui/src/theming/themes"
 
 const light = themes.light
+const dark = themes.dark
 
 const config: Config = {
   content: [
@@ -20,7 +21,6 @@ const config: Config = {
         'neutral': '#800080', 
         'primary': '#BF40BF'
         // make this primary colour more lighter
-    
       }
     }]
   }

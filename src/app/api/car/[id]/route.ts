@@ -60,6 +60,9 @@ export const PUT = async (req: NextApiRequest & Request, { params }: { params: {
         if (carDetails.vignette) {
             updatedData.vignette = carDetails.vignette;
         }
+        if (carDetails.description) {
+            updatedData.description = carDetails.description;
+        }
         
         const cars = await prisma.car.update({
             where: {

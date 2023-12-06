@@ -25,6 +25,7 @@ model car {
   insurance   String
   itp         String
   vignette    String
+  description String
   owner       user   @relation("UserCars", fields: [ownerId], references: [id])
   ownerId     String @map("owner_id") @db.ObjectId
 } 

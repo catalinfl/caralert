@@ -29,6 +29,7 @@ export type Car = {
     insurance: string,
     itp: string,
     vignette: string,
+    description?: string
 }
 
 
@@ -52,7 +53,6 @@ const Page = () => {
   const refITP = useRef<HTMLInputElement | null>(null)
   const refRovigniette = useRef<HTMLInputElement | null>(null)
   
-  console.log(createCar)
   
   useEffect(() => {
     if (calendarNum === 1) {
@@ -157,7 +157,7 @@ const Page = () => {
                 <input ref={refRovigniette} type="text" maxLength={40} disabled={calendarNum === 3 ? true : false}  onFocus={() => focusElement(3)} placeholder="Add expire date" className="input 
                 input-bordered w-full max-w-xs"/>
                 {calendarNum === 3 ? <Calendar minDate={new Date()} className={'bg-primary p-3'} onChange={onChange} value={value}/> : null}
-                <button className="btn btn-neutral mt-4" onClick={() => onSend()}> Testing </button>
+                <button className="btn btn-neutral mt-4" onClick={() => onSend()}> Create car </button>
               </div>
               </div>
               <div className="flex flex-1 flex-col justify-center items-center"> 

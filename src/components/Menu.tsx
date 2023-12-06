@@ -36,7 +36,7 @@ const Menu = ({changeContainer, carData}: MenuProps) => {
                 })}
               </ul>
               </details> : 
-              <li> Cars </li>
+              <p> Cars </p>
               }
               </li>
               <li onClick={() => changeContainer("expires", null)}>

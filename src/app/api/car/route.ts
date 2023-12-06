@@ -28,6 +28,7 @@ export const POST = async (req: NextApiRequest & Request) => {
                     insurance: carDetails.insurance,
                     itp: carDetails.itp,
                     vignette: carDetails.vignette,
+                    description: "",
                     owner: {
                         connect: {
                             id: user.id

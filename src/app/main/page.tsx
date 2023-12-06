@@ -1,15 +1,11 @@
 "use client"
-import { signOut, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import React, { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
-import CarInspection from "../../../public/car-inspection-icon.svg"
-import CarInsurance from "../../../public/car-insurance-icon.svg"
-import AccidentIcon from "../../../public/accident-icon.svg"
-// import CarIllustration from "../../../public/car-illustration.svg"
-import CarPark from "../../../public/carpark.svg"
-
-import CarRepair from "../../../public/car-repair.svg"
+import React, { useEffect, useState } from 'react';
+import CarInspection from "../../../public/car-inspection-icon.svg";
+import CarInsurance from "../../../public/car-insurance-icon.svg";
+import AccidentIcon from "../../../public/accident-icon.svg";
+import CarRepair from "../../../public/car-repair.svg";
 import Navbar from '@/components/Navbar';
 import Menu from '@/components/Menu';
 import Container from '@/components/Container';
@@ -17,11 +13,10 @@ import CarCard from '@/components/CarCard';
 import InfoCard from '@/components/InfoCard';
 import Expire from '@/components/Expire';
 import { CiEdit } from 'react-icons/ci';
-import { MdDelete, MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
 import { Car } from '../add/page';
 
 const images: string[] = [CarInspection, CarInsurance, CarRepair, AccidentIcon]
-
 
 export type ContainerSelectProps = {
   container: ContainerInfo,
@@ -67,7 +62,6 @@ const Page = () => {
   const [user, setUser] = useState<UserProps>(initUser)
   
   const changeContainer: FuncHandler['changeContainer'] = (container: MenuHandler, id: string | null) => {
-    console.log(id)
     switch (container) {
       case "principal": {
         setContainerHandler(initContainer)
@@ -85,6 +79,9 @@ const Page = () => {
         setContainerHandler({menuType: "car", carId: id})
         break
       }
+      default: {
+        break
+      }
     }
   }
   
@@ -95,7 +92,6 @@ const Page = () => {
     const fetchData = async () => {
       try {
         const nameForURL = encodeURIComponent(user.name)
-        console.log(nameForURL)
         const res = await fetch(`http://localhost:3000/api/user/${nameForURL}`, { method: "GET" })
         if (res.ok) {
           const data = await res.json();
@@ -148,7 +144,7 @@ function ContainerSelect({container, user, status, changeContainer, carData}: Co
         {carData?.cars?.map((car: Car, index) => {
           return (
             <div key={index} id={`card-${index}`} className="carousel-item w-full">
-              <CarCard key={index} carData={car} />
+              <CarCard changeContainer={changeContainer} key={index} carData={car} />
             </div>
           );
         })}
@@ -197,7 +193,6 @@ function ContainerSelect({container, user, status, changeContainer, carData}: Co
     
     const year = new Date();
     year.setFullYear(year.getFullYear() - 1);
-    console.log(new Date().getTime() - year.getTime());
     
     const insPercent = Math.floor(((new Date().getTime() - year.getTime()) / (new Date(car?.insurance as string).getTime() - year.getTime())) * 100);
     const itpPercent = Math.floor(((new Date().getTime() - year.getTime()) / (new Date(car?.itp as string).getTime() - year.getTime())) * 100);
@@ -209,10 +204,14 @@ function ContainerSelect({container, user, status, changeContainer, carData}: Co
         .catch(err => console.log(err))
     }
     
+    const redirectEdit = (url: string) => {
+      window.location.href = `/edit/${url}`
+    }
+    
     return (
       <Container>
       <div className="flex flex-col lg:flex-row justify-between min-h-[700px] h-full">
-        <div className="flex gap-y-2 flex-col justify-start w-[80%] bg-primary mx-auto p-3 text-white font-semibold rounded-lg">
+        <div className="flex gap-y-2 flex-col justify-start w-[80%] bg-primary mx-auto p-3 text-white font-semibold rounded-lg cursor-pointer">
           <p> Car model:  <span className="font-light"> {car?.model} </span> </p>
           <p> Car plate: <span className="font-light"> {car?.carplate} </span> </p>
           <p> Car colour: <span className="font-light"> {car?.colour} </span> </p>
@@ -242,24 +241,10 @@ function ContainerSelect({container, user, status, changeContainer, carData}: Co
             <progress className="progress progress-primary w-32 md:w-48 lg:w-56 h-3" value={vignettePercent} max="100"></progress> {`${vignettePercent}`}% - {vignettePercent < 100 ? `${vignetteRemaining} days left` : "Expired"}
             </div>
           </div>
-          
-          { /* Need reparation, also adding description in schema */
-          /* <div className="flex flex-col md:flex-row items-center gap-5 bg-neutral p-4">
-            <div className="flex flex-1"> 
-            <p> Reparation expires: <span className="font-light"> {car?.} </span> </p>
-            </div>
-            <div className="flex flex-1 items-center gap-5">
-            <progress className="progress progress-primary w-32 md:w-48 lg:w-56 h-3" value={40} max="100"></progress> 30% - 3 months left 
-            </div>
-          </div> */}
-          
         </div>
         <div className="flex flex-col justify-start">
-          {/* <div>
-            <Image src={CarPark} className="mx-auto mb-4 p-2 rounded-lg" alt="inspection" width="250" height="400" />
-          </div> */}
         <div className="flex flex-row w-full gap-5 max-w-[200px] justify-center mx-auto rounded-lg bg-primary my-3 p-2">
-          <div className="flex flex-col cursor-pointer justify-center items-center text-white font-bold">
+          <div onClick={() => redirectEdit(car?.id as string)} className="flex flex-col cursor-pointer justify-center items-center text-white font-bold">
             <CiEdit className="text-7xl text-white border-2 border-white"/>
             <p> Edit/Add </p>
           </div>
@@ -274,7 +259,6 @@ function ContainerSelect({container, user, status, changeContainer, carData}: Co
     )
   }
   else {
-    console.log(carData)
   
     const expiredInsurances = carData?.cars.filter((car: Car, index, carsArray) => {
       const insuranceDate = new Date(car?.insurance as string);
@@ -316,9 +300,22 @@ function ContainerSelect({container, user, status, changeContainer, carData}: Co
             if (expiredVignette?.some((c: Car) => c.carplate === car.carplate)) {
               expiredVigBool = true;
             }
+            
+            
+          const year = new Date();
+          year.setFullYear(year.getFullYear() - 1);
+          
+          const insPercent = Math.floor(((new Date().getTime() - year.getTime()) / (new Date(car?.insurance as string).getTime() - year.getTime())) * 100);
+          const itpPercent = Math.floor(((new Date().getTime() - year.getTime()) / (new Date(car?.itp as string).getTime() - year.getTime())) * 100);
+          const vignettePercent = Math.floor(((new Date().getTime() - year.getTime()) / (new Date(car?.vignette as string).getTime() - year.getTime())) * 100);
+            
                         
             if (expiredInsBool || expiredItpBool || expiredVigBool) {
-              return <Expire key={index} expireCar={car} expireInsurance={expiredInsBool} expireITP={expiredItpBool} expireVignette={expiredVigBool} />;
+              return <Expire key={index} insPercent={insPercent} itpPercent={itpPercent} vignettePercent={vignettePercent} expireCar={car} expireInsurance={expiredInsBool} expireITP={expiredItpBool} expireVignette={expiredVigBool} />;
+            }
+            
+            if (insPercent >= 90 || itpPercent >= 90 || vignettePercent >= 90) {
+              return <Expire key={index} expireCar={car} insPercent={insPercent} itpPercent={itpPercent} vignettePercent={vignettePercent} />;
             }
           })
           }
