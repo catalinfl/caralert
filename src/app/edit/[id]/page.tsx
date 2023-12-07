@@ -108,7 +108,7 @@ const EditPage = ({ params }: { params: { id: string }}) => {
    const handleEdit = async () => {
     try {
         const body = JSON.stringify({ name: data?.user?.name, carDetails: nonEmptyValues })
-        const res = await fetch(`http://localhost:3000/api/car/${params.id}`, { method: "PUT", body: body})
+        const _ = await fetch(`http://localhost:3000/api/car/${params.id}`, { method: "PUT", body: body})
         window.location.href = `/edit/${params.id}`
     }
     catch(err) {
@@ -126,7 +126,7 @@ const EditPage = ({ params }: { params: { id: string }}) => {
             <Container>
                  <div className="flex flex-col justify-start gap-y-4 min-h-[700px] h-full">
                      <div className="flex gap-y-2 flex-col justify-start w-[80%] bg-primary mx-auto p-3 text-white font-semibold rounded-lg cursor-pointer">
-                       <p> Car model:  <span        className="font-light"> {car.model} </span> </p>
+                       <p> Car model:  <span className="font-light"> {car.model} </span> </p>
                        <p> Car plate:  <span className="font-light"> {car.carplate} </span> </p>
                        <p> Car colour: <span className="font-light"> {car.colour} </span> </p>
                        <p> Car description: </p>
